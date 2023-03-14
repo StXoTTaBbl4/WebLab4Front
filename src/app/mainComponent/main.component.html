@@ -1,0 +1,47 @@
+<div>
+  <button class="w3-button w3-teal" (click)="Logout()">LogOut</button>
+</div>
+
+<div class="w3-half" id = "plot">
+  <span class="w3-left">
+    <canvas #canvas width="300" height="300" style="border: 1px solid black;">Canvas not supported</canvas>
+  </span>
+
+  <span class="w3-show-inline-block" style="margin-left: 10px">
+    <span id="mainInfo" style="background-color: lightcoral"></span>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <label for="x">X value</label>
+      <input type="number" max="3" min="-3" step="0.1" id="x" name="xvalue" placeholder="-3...3" ngModel required #first="ngModel">
+      <br>
+      <br>
+      <label for="y">Y value</label>
+      <input type="number" max="3" min="-5" step="0.1" id="y" name="yvalue" placeholder="-5...3" ngModel required>
+      <br>
+      <br>
+      <label for="r">R value</label>
+      <input type="number" max="3" min="-3" step="0.1" id="r" name="rvalue"  placeholder="-3...3" ngModel required>
+      <input hidden type="text"  id="login" name="login"  ngModel>
+      <br>
+      <br>
+      <button id="submitButton" [disabled]="f.invalid" type="button" (click)="onSubmit(f)">Submit</button>
+    </form>
+  </span>
+</div>
+<div class="w3-container w3-half " >
+  <table id="table" class="w3-table-all w3-centered" style=" border: 1px solid black; border-collapse: collapse; ">
+    <tr class="w3-light-grey">
+      <th>X</th>
+      <th>Y</th>
+      <th>R</th>
+      <th>Hit</th>
+    </tr>
+    <tbody *ngFor="let hitEntry of hitEntries">
+    <tr class='columns'>
+      <td class="x">{{hitEntry.xvalue}}</td>
+      <td class="y">{{hitEntry.yvalue}}</td>
+      <td class="r">{{hitEntry.rvalue}}</td>
+      <td class="hit">{{hitEntry.hit}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

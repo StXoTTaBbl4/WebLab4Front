@@ -1,0 +1,31 @@
+
+<div class="w3-center w3-container" id="auth" [hidden]="!isUserExist">
+  <h2>Welcome</h2>
+  <img src="assets/images/peeking-peek.gif" alt="pika-pika" style="padding-bottom: 10px">
+  <div id="loginInfo" style="background-color: lightcoral"></div>
+  <form  #f="ngForm" novalidate>
+    <input type="text" minlength="6" id="login" name="login" placeholder="Login" ngModel required #first="ngModel">
+    <br>
+    <br>
+    <input type="password" minlength="6"  id="password" name="password" placeholder="Password" ngModel required>
+    <br>
+    <br>
+    <button type="button" id="sub" class="w3-btn w3-small w3-round-xlarge w3-black w3-hover-green" [disabled]="f.invalid" (click)="onSubmit(f)">Enter</button>
+  </form>
+  <button type="button" id="toReg" style="margin-top: 10px" class="w3-btn w3-small w3-round-xlarge w3-black w3-hover-green" (click)="goToReg()">Registration</button>
+</div>
+<!--<div class="w3-center w3-container" id="registration" [hidden]="isUserExist">-->
+<!--  <h2>Registration</h2>-->
+<!--  <form  #h="ngForm" novalidate>-->
+<!--    <input type="text" minlength="6" id="regLogin" name="login" placeholder="Login" ngModel required #first="ngModel">-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <input type="password" minlength="6"  id="regPassword" name="password" placeholder="Password" ngModel required>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <input type="password" minlength="6"  id="reRegPassword" name="rePassword" placeholder="Repeat password" ngModel required>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <button type="button" id="reg" [disabled]="h.invalid && isPasswordWalid" (click)="onRegister(h)">Register</button>-->
+<!--  </form>-->
+<!--</div>-->
