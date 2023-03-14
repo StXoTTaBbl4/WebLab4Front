@@ -1,5 +1,5 @@
 
-<div class="w3-center w3-container" id="registration">
+<div class="w3-center w3-container" id="registration" style="overflow: auto; padding-bottom: 70px">
   <h2>Registration</h2>
   <div id="regInfo" style="background-color: lightcoral"></div>
   <form  #h="ngForm" novalidate>
@@ -12,7 +12,7 @@
     <input type="password" minlength="6"  id="reRegPassword" name="rePassword" placeholder="Repeat password" ngModel required>
     <br>
     <br>
-    <button type="button" id="reg" class="w3-btn w3-small w3-round-xlarge w3-black w3-hover-green" [disabled]="h.invalid && isPasswordWalid" (click)="onRegister(h)">Sign in</button>
+    <button type="button" id="reg" [disabled]="h.invalid" (click)="onRegister(h)">Sign in</button>
   </form>
-  <button type="button" id="toReg" style="margin-top: 10px" class="w3-btn w3-small w3-round-xlarge w3-black w3-hover-green" (click)="goToAuth()">Back</button>
+  <button type="button" id="toReg" style="margin-top: 10px" (click)="goToAuth()">Back</button>
 </div>

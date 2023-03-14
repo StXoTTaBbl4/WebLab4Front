@@ -14,7 +14,7 @@ import {AuthEntry} from "../AuthEntry";
 })
 
 export class AuthComponent{
-  protected isUserExist: boolean = true;
+  public isUserExist: boolean = true;
   isPasswordWalid: boolean = false;
   constructor(
     private router: Router,

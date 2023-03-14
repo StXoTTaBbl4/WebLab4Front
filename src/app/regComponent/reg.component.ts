@@ -13,7 +13,6 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 
 export class RegComponent {
-  isPasswordWalid: boolean = false;
   constructor(
     private router: Router,
     private authService: AuthEntryService
@@ -41,7 +40,7 @@ export class RegComponent {
       });
     }else {
       // @ts-ignore
-      document.getElementById('regInfo').innerText = "Password fields must be identical";
+      document.getElementById('regInfo').innerText = "Password fields must be identical"  ;
     }
   }
 

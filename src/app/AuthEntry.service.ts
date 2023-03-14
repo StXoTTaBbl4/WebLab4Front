@@ -18,4 +18,6 @@ export class AuthEntryService {
     console.log(authEntry.password);
     return this.http.post<AuthEntry>(`${this.apiServerURL}/registration`, authEntry);
   }
+
+
 }

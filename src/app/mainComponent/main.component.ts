@@ -1,9 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from "@angular/core";
 import {HitEntryService} from "../HitEntry.service";
 import {HitEntry} from "../HitEntry";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
 import {Router} from "@angular/router";
+import {AuthEntry} from "../AuthEntry";
 
 
 @Component({
@@ -14,8 +15,16 @@ import {Router} from "@angular/router";
 
 export class MainComponent implements OnInit{
   public hitEntries: HitEntry[] = [];
+  // @ts-ignore
+  public authEntry: AuthEntry = {login:window.sessionStorage.getItem("login"),password:""};
+  // @ts-ignore
+  // public hitEntry: HitEntry = {login: window.sessionStorage.getItem("login"),
+  // xvalue:0,
+  // yvalue:0,
+  // rvalue:0,
+  // hit:false};
   title: string ='WebLab4Main';
-  constructor(private hitEntryService: HitEntryService , private router: Router) {}
+  constructor(private hitEntryService: HitEntryService ,private router: Router) {}
   @ViewChild('canvas',{static:true}) myCanvas!:ElementRef;
 
 
@@ -35,6 +44,8 @@ export class MainComponent implements OnInit{
         }
     });
   }
+
+
 
   ngOnInit(){
     if(window.sessionStorage.getItem("login") == null)
@@ -77,6 +88,19 @@ export class MainComponent implements OnInit{
         // @ts-ignore
         document.getElementById("y").value = y;
 
+        // @ts-ignore
+        // document.getElementById("Hx").value = x;
+        // // @ts-ignore
+        // document.getElementById("Hy").value = y;
+        //
+        // // @ts-ignore
+        // document.getElementById("Hr").value = r;
+        //
+        document.getElementById("submitButton").click();
+
+
+
+
       }else
         {
           // @ts-ignore
@@ -98,7 +122,9 @@ export class MainComponent implements OnInit{
         (error: HttpErrorResponse) => {
           console.log(error.message)
         }
-    })
+    });
+    this.getHitEntries();
+
   }
 
   public drawPlot(ctx : CanvasRenderingContext2D,w: number,h: number) :void{
@@ -185,22 +211,24 @@ export class MainComponent implements OnInit{
   }
 
   Logout() {
+    console.log("logging out" + this.authEntry.login);
+    this.hitEntryService.logout(this.authEntry);
     window.sessionStorage.removeItem("login");
     this.router.navigate(['/auth']);
   }
 
   drawDots(canvas: HTMLCanvasElement){
+    // if(this.hitEntries != null) {
+      for (let i = 1; i < this.hitEntries.length; i++) {
+        this.drawDot(
+          this.hitEntries[i].xvalue,
+          this.hitEntries[i].yvalue,
+          this.hitEntries[i].rvalue,
+          this.hitEntries[i].hit,
+          canvas);
 
-
-    for (let i = 1; i < this.hitEntries.length; i++) {
-      this.drawDot(
-        this.hitEntries[i].xvalue,
-        this.hitEntries[i].yvalue,
-        this.hitEntries[i].rvalue,
-        this.hitEntries[i].hit,
-        canvas);
-
-    }
+      }
+    // }
   }
 
   drawDot(x: number, y: number, r: number, isHit: boolean, canvas: HTMLCanvasElement){
@@ -251,4 +279,31 @@ export class MainComponent implements OnInit{
   }
 
 
+  clear() {
+    // @ts-ignore
+    this.hitEntryService.clearAll(this.authEntry).subscribe({
+      next:
+        () => {
+          const canvas: HTMLCanvasElement = this.myCanvas.nativeElement;
+          const ctx = canvas.getContext("2d");
+          this.getHitEntries();
+          // @ts-ignore
+          this.drawPlot(ctx,canvas.width,canvas.height);
+        },
+      error:
+        (error: HttpErrorResponse) => {
+          console.log(error.message)
+        }
+    });
+
+  }
+
+  @HostListener('window:unload', ['$event'])
+  unloadHandler() {
+    this.Logout();
+  }
+
+  // sendFromCanvas(x:number,y:number,r:number){
+  //
+  // }
 }
